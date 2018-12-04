@@ -19,7 +19,7 @@ System.out.println("size: " + queue.size)
 
 System.out.println("snapshot: " + queue.toSeq)
 
-val connFactory = queue.createConnectionFactory
+val connFactory = queue.createConnectionFactory // javax.jms.ConnectionFactory
 
 ```
 
