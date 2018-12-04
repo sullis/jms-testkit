@@ -45,9 +45,13 @@ class JmsQueueSpec extends WordSpec with Matchers {
       session.getTransacted shouldBe (true)
       session.getAcknowledgeMode shouldBe (ackMode)
       val q = session.createQueue(queue.queueName)
-      val textMessage = session.createTextMessage("Hello world")
+      val textMessage = session.createTextMessage("Excellent message")
+      val producer = session.createProducer(q)
+      producer.send(textMessage)
+      session.commit()
       session.close()
       conn.close()
+      queue.toSeq shouldBe Seq("Hello world", "Excellent message")
     }
 
     "two queues" in {
