@@ -6,8 +6,8 @@ import java.net.URI
 import java.util.UUID
 import javax.jms.TextMessage
 
-object JmsBrokerBuilder {
-  def buildInMemoryBroker(): JmsBroker = {
+object JmsQueueBuilder {
+  def build(): JmsQueue = {
     val inMemoryBrokerName = "brokerName-" + UUID.randomUUID.toString
     val transportUri = s"vm://${inMemoryBrokerName}?create=false"
     val brokerConfigUri = new URI(s"broker:(${transportUri})/${inMemoryBrokerName}?persistent=false&useJmx=false")
@@ -17,17 +17,18 @@ object JmsBrokerBuilder {
     brokerService.setUseJmx(false)
     brokerService.setStartAsync(false)
     brokerService.start()
-    new JmsBroker(brokerService)
+    new JmsQueue(brokerService)
   }
 }
 
-class JmsBroker(service: BrokerService) {
+class JmsQueue(service: BrokerService) {
+
+  private def brokerName: String = service.getBrokerName
 
   def isStarted(): Boolean = service.isStarted
-  def brokerName: String = service.getBrokerName
   val queueName: String = "Queue-" + UUID.randomUUID.toString
 
-  def queueSize: Long = calculateQueueSize(queueName)
+  def size: Long = calculateQueueSize(queueName)
 
   private def calculateQueueSize(qName: String): Long = {
     import scala.collection.JavaConverters._
@@ -47,7 +48,7 @@ class JmsBroker(service: BrokerService) {
     connFactory
   }
 
-  def browseQueue(): Seq[String] = {
+  def browse(): Seq[String] = {
     import scala.collection.JavaConverters._
     val qconn = createConnectionFactory.createQueueConnection()
     val session = qconn.createQueueSession(false, javax.jms.Session.AUTO_ACKNOWLEDGE)
