@@ -20,6 +20,8 @@ libraryDependencies ++= Seq(
   "com.google.guava" % "guava" % "27.0.1-jre" % Test
 )
 
+useGpg := true
+
 releaseCrossBuild := true
 
 releasePublishArtifactsAction := PgpKeys.publishSigned.value
