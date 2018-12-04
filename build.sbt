@@ -1,6 +1,6 @@
 name := "jms-testkit"
 
-organization := "com.github.sullis"
+organization := "io.github.sullis"
 
 scalaVersion := "2.12.7"
 
