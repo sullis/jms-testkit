@@ -5,7 +5,7 @@ import org.scalatest.{WordSpec, Matchers}
 class JmsQueueSpec extends WordSpec with Matchers {
 
   "JmsQueue" should {
-    "support JMS queues" in {
+    "support queue operations" in {
       val queue = JmsQueueBuilder.build()
       queue.size shouldBe 0
       queue.publishMessage("a1a")
