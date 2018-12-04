@@ -7,7 +7,7 @@ class JmsQueueSpec extends WordSpec with Matchers {
 
   "JmsQueue" should {
     "support queue operations" in {
-      val queue = JmsQueueBuilder.build()
+      val queue = JmsQueue()
       queue.size shouldBe 0
       queue.publishMessage("a1a")
       queue.size shouldBe 1
@@ -24,7 +24,7 @@ class JmsQueueSpec extends WordSpec with Matchers {
     }
 
     "toJavaList sanity check" in {
-      val queue = JmsQueueBuilder.build()
+      val queue = JmsQueue()
       queue.toJavaList.isEmpty shouldBe true
       queue.publishMessage("Portland")
       queue.toJavaList should equal (Lists.newArrayList("Portland"))
@@ -34,7 +34,7 @@ class JmsQueueSpec extends WordSpec with Matchers {
     }
 
     "createConnectionFactory sanity check " in {
-      val queue = JmsQueueBuilder.build()
+      val queue = JmsQueue()
       queue.publishMessage("Hello world")
       val connFactory = queue.createConnectionFactory
       connFactory.getBrokerURL should not be (null)
@@ -44,6 +44,19 @@ class JmsQueueSpec extends WordSpec with Matchers {
       session.getTransacted shouldBe (true)
       session.close()
       conn.close()
+    }
+
+    "two queues" in {
+      val queue1 = JmsQueue()
+      val queue2 = JmsQueue()
+      queue1.queueName should not be (queue2.queueName)
+      queue1.defaultUriString should not be (queue2.defaultUriString)
+      queue1.publishMessage("California")
+      queue1.size shouldBe 1
+      queue2.size shouldBe 0
+      queue2.publishMessage("New York")
+      queue1.toSeq shouldBe (Seq("California"))
+      queue2.toSeq shouldBe (Seq("New York"))
     }
   }
 }

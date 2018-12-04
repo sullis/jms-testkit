@@ -7,21 +7,6 @@ import java.util.UUID
 import javax.jms.TextMessage
 import scala.collection.JavaConverters._
 
-object JmsQueueBuilder {
-  def build(): JmsQueue = {
-    val inMemoryBrokerName = "brokerName-" + UUID.randomUUID.toString
-    val transportUri = s"vm://${inMemoryBrokerName}?create=false"
-    val brokerConfigUri = new URI(s"broker:(${transportUri})/${inMemoryBrokerName}?persistent=false&useJmx=false")
-
-    val brokerService = BrokerFactory.createBroker(brokerConfigUri)
-    brokerService.setPersistent(false)
-    brokerService.setUseJmx(false)
-    brokerService.setStartAsync(false)
-    brokerService.start()
-    new JmsQueue(brokerService)
-  }
-}
-
 class JmsQueue(service: BrokerService) {
 
   def isStarted(): Boolean = service.isStarted
@@ -67,3 +52,19 @@ class JmsQueue(service: BrokerService) {
     sender.send(session.createTextMessage(msg))
   }
 }
+
+object JmsQueue {
+  def apply(): JmsQueue = {
+    val inMemoryBrokerName = "brokerName-" + UUID.randomUUID.toString
+    val transportUri = s"vm://${inMemoryBrokerName}?create=false"
+    val brokerConfigUri = new URI(s"broker:(${transportUri})/${inMemoryBrokerName}?persistent=false&useJmx=false")
+
+    val brokerService = BrokerFactory.createBroker(brokerConfigUri)
+    brokerService.setPersistent(false)
+    brokerService.setUseJmx(false)
+    brokerService.setStartAsync(false)
+    brokerService.start()
+    new JmsQueue(brokerService)
+  }
+}
+
