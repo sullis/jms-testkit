@@ -14,9 +14,7 @@ queue.publishMessage("Portland")
 queue.publishMessage("Seattle")
 
 System.out.println("queueName: " + queue.queueName)
-
 System.out.println("size: " + queue.size)
-
 System.out.println("snapshot: " + queue.toSeq)
 
 val connFactory = queue.createConnectionFactory // javax.jms.ConnectionFactory
