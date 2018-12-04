@@ -24,7 +24,7 @@ class JmsQueue(service: BrokerService) {
     counts.sum
   }
 
-  def defaultUriString: String = service.getDefaultSocketURIString
+  def brokerUri: String = service.getDefaultSocketURIString
 
   def createConnectionFactory: ActiveMQConnectionFactory = {
     val connFactory = new ActiveMQConnectionFactory(service.getDefaultSocketURIString)

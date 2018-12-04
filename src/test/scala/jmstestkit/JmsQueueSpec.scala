@@ -6,6 +6,16 @@ import com.google.common.collect.Lists
 class JmsQueueSpec extends WordSpec with Matchers {
 
   "JmsQueue" should {
+    "valid queue name" in {
+      val queue = JmsQueue()
+      queue.queueName.size shouldBe > (0)
+    }
+
+    "valid broker uri" in {
+      val queue = JmsQueue()
+      queue.brokerUri.size shouldBe > (0)
+    }
+
     "support queue operations" in {
       val queue = JmsQueue()
       queue.size shouldBe 0
@@ -58,7 +68,7 @@ class JmsQueueSpec extends WordSpec with Matchers {
       val queue1 = JmsQueue()
       val queue2 = JmsQueue()
       queue1.queueName should not be (queue2.queueName)
-      queue1.defaultUriString should not be (queue2.defaultUriString)
+      queue1.brokerUri should not be (queue2.brokerUri)
       queue1.publishMessage("California")
       queue1.size shouldBe 1
       queue2.size shouldBe 0
