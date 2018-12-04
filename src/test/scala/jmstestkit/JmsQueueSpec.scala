@@ -1,7 +1,8 @@
 package jmstestkit
 
-import org.scalatest.{WordSpec, Matchers}
+import org.scalatest.{Matchers, WordSpec}
 import com.google.common.collect.Lists
+import javax.jms.JMSException
 
 class JmsQueueSpec extends WordSpec with Matchers {
 
@@ -31,6 +32,27 @@ class JmsQueueSpec extends WordSpec with Matchers {
       // second check
       queue.size shouldBe 3
       queue.toSeq shouldBe Seq("a1a", "b2b", "c3c")
+    }
+
+    "stop() sanity check" in {
+      val queue = JmsQueue()
+      val connFactory = queue.createConnectionFactory
+      val qconn = connFactory.createQueueConnection
+      val qsession = qconn.createQueueSession(true, javax.jms.Session.AUTO_ACKNOWLEDGE)
+      val q = qsession.createQueue(queue.queueName)
+      val sender = qsession.createSender(q)
+      val msg = qsession.createTextMessage("abcdef")
+
+      queue.stop()
+      Thread.sleep(1000)
+
+      intercept[JMSException] { connFactory.createQueueConnection }.getMessage should startWith ("Could not create Transport")
+      intercept[JMSException] { qsession.createSender(q) }.getMessage should startWith ("The Session is closed")
+      intercept[JMSException] { sender.send(msg) }.getMessage should startWith ("The producer is closed")
+
+      intercept[IllegalStateException] { queue.toSeq }.getMessage shouldBe "Broker is stopped"
+      intercept[IllegalStateException] { queue.toJavaList }.getMessage shouldBe "Broker is stopped"
+      intercept[IllegalStateException] { queue.createConnectionFactory }.getMessage shouldBe "Broker is stopped"
     }
 
     "toJavaList sanity check" in {

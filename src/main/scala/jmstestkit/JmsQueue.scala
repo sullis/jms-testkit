@@ -27,6 +27,12 @@ class JmsQueue(service: BrokerService) {
   def brokerUri: String = service.getDefaultSocketURIString
 
   def createConnectionFactory: javax.jms.QueueConnectionFactory = {
+    if (service.isStopped) {
+      throw new IllegalStateException("Broker is stopped")
+    } else if (service.isStopping) {
+      throw new IllegalStateException("Broker is stopping")
+    }
+
     val connFactory = new ActiveMQConnectionFactory(service.getDefaultSocketURIString)
     connFactory.setUseCompression(false)
     connFactory
@@ -50,6 +56,10 @@ class JmsQueue(service: BrokerService) {
     val queue = session.createQueue(queueName)
     val sender = session.createSender(queue)
     sender.send(session.createTextMessage(msg))
+  }
+
+  def stop(): Unit = {
+    service.stop()
   }
 }
 
