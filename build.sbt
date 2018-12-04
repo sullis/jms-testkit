@@ -1,3 +1,5 @@
+import xerial.sbt.Sonatype._
+
 name := "jms-testkit"
 
 organization := "io.github.sullis"
