@@ -23,8 +23,6 @@ object JmsQueueBuilder {
 
 class JmsQueue(service: BrokerService) {
 
-  private def brokerName: String = service.getBrokerName
-
   def isStarted(): Boolean = service.isStarted
   val queueName: String = "Queue-" + UUID.randomUUID.toString
 
