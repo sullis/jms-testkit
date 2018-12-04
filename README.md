@@ -21,3 +21,23 @@ val connFactory = queue.createConnectionFactory // javax.jms.ConnectionFactory
 
 ```
 
+# Java example
+
+```
+
+import jmstestkit.JmsQueue;
+import javax.jms.ConnectionFactory;
+
+JmsQueue queue = JmsQueue.apply();
+
+queue.publishMessage("Whistler");
+queue.publishMessage("Blackcomb");
+
+System.out.println("queueName: " + queue.queueName());
+System.out.println("size: " + queue.size());
+System.out.println("snapshot: " + queue.toJavaList());
+
+ConnectionFactory connFactory = queue.createConnectionFactory(); // javax.jms.ConnectionFactory
+
+```
+
