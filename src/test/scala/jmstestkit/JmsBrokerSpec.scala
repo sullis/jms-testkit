@@ -21,5 +21,15 @@ class JmsBrokerSpec extends WordSpec with Matchers {
       broker.queueSize shouldBe 3
       broker.browseQueue shouldBe Seq("a1a", "b2b", "c3c")
     }
+
+    "createConnectionFactory sanity check " in {
+      val broker = JmsBrokerBuilder.buildInMemoryBroker()
+      broker.publishMessage("Hello world")
+      val connFactory = broker.createConnectionFactory
+      connFactory.getBrokerURL should not be (null)
+      val conn = connFactory.createConnection()
+      conn.getMetaData should not be (null)
+      conn.close()
+    }
   }
 }
