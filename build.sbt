@@ -16,7 +16,8 @@ libraryDependencies ++= Seq(
   "org.apache.activemq" % "activemq-broker"   % activeMqVersion,
   "org.apache.activemq" % "activemq-client"   % activeMqVersion,
   "org.slf4j" % "slf4j-api" % "1.7.25",
-  "org.scalatest" %% "scalatest" % "3.0.5" % Test
+  "org.scalatest" %% "scalatest" % "3.0.5" % Test,
+  "com.google.guava" % "guava" % "27.0.1-jre" % Test
 )
 
 releaseCrossBuild := true

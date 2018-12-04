@@ -5,6 +5,7 @@ import org.apache.activemq.ActiveMQConnectionFactory
 import java.net.URI
 import java.util.UUID
 import javax.jms.TextMessage
+import scala.collection.JavaConverters._
 
 object JmsQueueBuilder {
   def build(): JmsQueue = {
@@ -46,13 +47,16 @@ class JmsQueue(service: BrokerService) {
     connFactory
   }
 
-  def browse(): Seq[String] = {
-    import scala.collection.JavaConverters._
+  def toSeq(): Seq[String] = {
     val qconn = createConnectionFactory.createQueueConnection()
     val session = qconn.createQueueSession(false, javax.jms.Session.AUTO_ACKNOWLEDGE)
     val queue = session.createQueue(queueName)
     qconn.start
     session.createBrowser(queue).getEnumeration.asScala.toSeq.asInstanceOf[Seq[TextMessage]].map(_.getText)
+  }
+
+  def toJavaList(): java.util.List[String] = {
+    java.util.Collections.unmodifiableList(toSeq.asJava)
   }
 
   def publishMessage(msg: String): Unit = {
