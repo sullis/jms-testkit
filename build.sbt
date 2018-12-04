@@ -1,4 +1,4 @@
-import xerial.sbt.Sonatype._
+enablePlugins(Sonatype)
 
 name := "jms-testkit"
 
