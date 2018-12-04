@@ -10,7 +10,11 @@ scalacOptions += "-target:jvm-1.8"
 
 javacOptions ++= Seq("-source", "1.8", "-target", "1.8")
 
+val activeMqVersion = "5.15.6"
+
 libraryDependencies ++= Seq(
+  "org.apache.activemq" % "activemq-broker"   % activeMqVersion,
+  "org.apache.activemq" % "activemq-client"   % activeMqVersion,
   "org.slf4j" % "slf4j-api" % "1.7.25",
   "org.scalatest" %% "scalatest" % "3.0.5" % Test
 )
