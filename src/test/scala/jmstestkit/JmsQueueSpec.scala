@@ -29,6 +29,9 @@ class JmsQueueSpec extends WordSpec with Matchers {
       connFactory.getBrokerURL should not be (null)
       val conn = connFactory.createConnection()
       conn.getMetaData should not be (null)
+      val session = conn.createSession(true, javax.jms.Session.AUTO_ACKNOWLEDGE)
+      session.getTransacted shouldBe (true)
+      session.close()
       conn.close()
     }
   }
