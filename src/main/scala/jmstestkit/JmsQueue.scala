@@ -26,7 +26,7 @@ class JmsQueue(service: BrokerService) {
 
   def brokerUri: String = service.getDefaultSocketURIString
 
-  def createConnectionFactory: ActiveMQConnectionFactory = {
+  def createConnectionFactory: javax.jms.QueueConnectionFactory = {
     val connFactory = new ActiveMQConnectionFactory(service.getDefaultSocketURIString)
     connFactory.setUseCompression(false)
     connFactory

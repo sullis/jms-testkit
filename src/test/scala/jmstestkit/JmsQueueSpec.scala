@@ -47,7 +47,6 @@ class JmsQueueSpec extends WordSpec with Matchers {
       val queue = JmsQueue()
       queue.publishMessage("Hello world")
       val connFactory = queue.createConnectionFactory
-      connFactory.getBrokerURL should not be (null)
       val conn = connFactory.createConnection()
       conn.getMetaData should not be (null)
       val ackMode = javax.jms.Session.SESSION_TRANSACTED
