@@ -22,6 +22,8 @@ libraryDependencies ++= Seq(
   "com.google.guava" % "guava" % "27.0.1-jre" % Test
 )
 
+updateOptions := updateOptions.value.withGigahorse(false)
+
 useGpg := true
 
 releaseCrossBuild := true
