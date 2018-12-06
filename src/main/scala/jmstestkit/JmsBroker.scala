@@ -28,9 +28,14 @@ class JmsBroker(val service: BrokerService) {
     new ActiveMQConnectionFactory(service.getDefaultSocketURIString)
   }
 
-  def stop(): Unit = {
-    service.stop()
+  def start(force: Boolean = true): Unit = service.start(force)
+
+  def restart(): Unit = {
+    stop()
+    start(force = true)
   }
+
+  def stop(): Unit = service.stop()
 
   private def checkState(): Unit = {
     if (service.isStopped) {
