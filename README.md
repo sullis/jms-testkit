@@ -27,7 +27,7 @@ System.out.println("queueName: " + queue.queueName)
 System.out.println("size: " + queue.size)
 System.out.println("snapshot: " + queue.toSeq)
 
-val connFactory = queue.createConnectionFactory // javax.jms.ConnectionFactory
+val connFactory = queue.createQueueConnectionFactory // javax.jms.QueueConnectionFactory
 
 ```
 
@@ -47,7 +47,7 @@ System.out.println("queueName: " + queue.queueName());
 System.out.println("size: " + queue.size());
 System.out.println("snapshot: " + queue.toJavaList());
 
-ConnectionFactory connFactory = queue.createConnectionFactory(); // javax.jms.ConnectionFactory
+ConnectionFactory connFactory = queue.createQueueConnectionFactory(); // javax.jms.QueueConnectionFactory
 
 ```
 
