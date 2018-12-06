@@ -36,7 +36,7 @@ val connFactory = queue.createQueueConnectionFactory // javax.jms.QueueConnectio
 ```
 
 import jmstestkit.JmsQueue;
-import javax.jms.ConnectionFactory;
+import javax.jms.QueueConnectionFactory;
 
 JmsQueue queue = JmsQueue.apply();
 
@@ -47,7 +47,7 @@ System.out.println("queueName: " + queue.queueName());
 System.out.println("size: " + queue.size());
 System.out.println("snapshot: " + queue.toJavaList());
 
-ConnectionFactory connFactory = queue.createQueueConnectionFactory(); // javax.jms.QueueConnectionFactory
+QueueConnectionFactory connFactory = queue.createQueueConnectionFactory(); // javax.jms.QueueConnectionFactory
 
 ```
 

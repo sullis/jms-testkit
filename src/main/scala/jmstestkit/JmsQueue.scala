@@ -2,7 +2,7 @@ package jmstestkit
 
 import java.util.UUID
 
-import javax.jms.{QueueConnectionFactory, TextMessage}
+import javax.jms.{QueueConnectionFactory, ConnectionFactory, TextMessage}
 
 import scala.collection.JavaConverters._
 
@@ -14,6 +14,7 @@ class JmsQueue(val broker: JmsBroker) {
   def size: Long = calculateQueueSize(queueName)
 
   def createQueueConnectionFactory: QueueConnectionFactory = broker.createQueueConnectionFactory
+  def createConnectionFactory: ConnectionFactory = broker.createConnectionFactory
 
   private def calculateQueueSize(qName: String): Long = {
     import scala.collection.JavaConverters._
