@@ -41,6 +41,8 @@ class JmsQueueSpec extends WordSpec with Matchers {
       queue.stop()
       Thread.sleep(1000)
 
+      queue.isStarted shouldBe (false)
+
       intercept[JMSException] { connFactory.createQueueConnection }.getMessage should startWith ("Could not create Transport")
       intercept[JMSException] { qsession.createSender(q) }.getMessage should startWith ("The Session is closed")
       intercept[JMSException] { sender.send(msg) }.getMessage should startWith ("The producer is closed")
