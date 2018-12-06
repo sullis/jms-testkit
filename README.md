@@ -2,7 +2,17 @@
 in-memory JMS library
 
 
-# Scala example
+# Scala build.sbt
+
+```
+
+"io.github.sullis" %% "jms-testkit" % "0.0.2" % Test
+
+
+```
+
+
+# Scala code example
 
 ```
 
@@ -21,7 +31,7 @@ val connFactory = queue.createConnectionFactory // javax.jms.ConnectionFactory
 
 ```
 
-# Java example
+# Java code example
 
 ```
 
