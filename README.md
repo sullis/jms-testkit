@@ -27,7 +27,7 @@ System.out.println("queueName: " + queue.queueName)
 System.out.println("size: " + queue.size)
 System.out.println("snapshot: " + queue.toSeq)
 
-val connFactory = queue.createConnectionFactory // javax.jms.ConnectionFactory
+val connFactory = queue.createQueueConnectionFactory // javax.jms.QueueConnectionFactory
 
 ```
 
@@ -36,7 +36,7 @@ val connFactory = queue.createConnectionFactory // javax.jms.ConnectionFactory
 ```
 
 import jmstestkit.JmsQueue;
-import javax.jms.ConnectionFactory;
+import javax.jms.QueueConnectionFactory;
 
 JmsQueue queue = JmsQueue.apply();
 
@@ -47,7 +47,7 @@ System.out.println("queueName: " + queue.queueName());
 System.out.println("size: " + queue.size());
 System.out.println("snapshot: " + queue.toJavaList());
 
-ConnectionFactory connFactory = queue.createConnectionFactory(); // javax.jms.ConnectionFactory
+QueueConnectionFactory connFactory = queue.createQueueConnectionFactory(); // javax.jms.QueueConnectionFactory
 
 ```
 

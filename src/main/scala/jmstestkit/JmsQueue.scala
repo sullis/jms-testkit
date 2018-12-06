@@ -1,22 +1,24 @@
 package jmstestkit
 
-import org.apache.activemq.broker.{BrokerFactory, BrokerService}
-import org.apache.activemq.ActiveMQConnectionFactory
-import java.net.URI
 import java.util.UUID
-import javax.jms.TextMessage
+
+import javax.jms.{QueueConnectionFactory, ConnectionFactory, TextMessage}
+
 import scala.collection.JavaConverters._
 
-class JmsQueue(service: BrokerService) {
+class JmsQueue(val broker: JmsBroker) {
 
-  def isStarted(): Boolean = service.isStarted
+  def isStarted(): Boolean = broker.isStarted
   val queueName: String = "Queue-" + UUID.randomUUID.toString
 
   def size: Long = calculateQueueSize(queueName)
 
+  def createQueueConnectionFactory: QueueConnectionFactory = broker.createQueueConnectionFactory
+  def createConnectionFactory: ConnectionFactory = broker.createConnectionFactory
+
   private def calculateQueueSize(qName: String): Long = {
     import scala.collection.JavaConverters._
-    val destinationMap = service.getRegionBroker.getDestinationMap().asScala
+    val destinationMap = broker.service.getRegionBroker.getDestinationMap().asScala
     val dests = destinationMap.values.filter(_.getName == qName)
     val counts = dests.map {
       _.getDestinationStatistics.getMessages.getCount
@@ -24,22 +26,8 @@ class JmsQueue(service: BrokerService) {
     counts.sum
   }
 
-  def brokerUri: String = service.getDefaultSocketURIString
-
-  def createConnectionFactory: javax.jms.QueueConnectionFactory = {
-    if (service.isStopped) {
-      throw new IllegalStateException("Broker is stopped")
-    } else if (service.isStopping) {
-      throw new IllegalStateException("Broker is stopping")
-    }
-
-    val connFactory = new ActiveMQConnectionFactory(service.getDefaultSocketURIString)
-    connFactory.setUseCompression(false)
-    connFactory
-  }
-
   def toSeq(): Seq[String] = {
-    val qconn = createConnectionFactory.createQueueConnection()
+    val qconn = createQueueConnectionFactory.createQueueConnection()
     val session = qconn.createQueueSession(false, javax.jms.Session.AUTO_ACKNOWLEDGE)
     val queue = session.createQueue(queueName)
     qconn.start
@@ -51,7 +39,7 @@ class JmsQueue(service: BrokerService) {
   }
 
   def publishMessage(msg: String): Unit = {
-    val qconn = createConnectionFactory.createQueueConnection()
+    val qconn = createQueueConnectionFactory.createQueueConnection()
     val session = qconn.createQueueSession(false, javax.jms.Session.AUTO_ACKNOWLEDGE)
     val queue = session.createQueue(queueName)
     val sender = session.createSender(queue)
@@ -59,22 +47,13 @@ class JmsQueue(service: BrokerService) {
   }
 
   def stop(): Unit = {
-    service.stop()
+    broker.stop()
   }
 }
 
 object JmsQueue {
   def apply(): JmsQueue = {
-    val inMemoryBrokerName = "brokerName-" + UUID.randomUUID.toString
-    val transportUri = s"vm://${inMemoryBrokerName}?create=false"
-    val brokerConfigUri = new URI(s"broker:(${transportUri})/${inMemoryBrokerName}?persistent=false&useJmx=false")
-
-    val brokerService = BrokerFactory.createBroker(brokerConfigUri)
-    brokerService.setPersistent(false)
-    brokerService.setUseJmx(false)
-    brokerService.setStartAsync(false)
-    brokerService.start()
-    new JmsQueue(brokerService)
+    new JmsQueue(JmsBroker())
   }
 }
 

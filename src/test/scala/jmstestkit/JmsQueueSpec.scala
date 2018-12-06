@@ -12,11 +12,6 @@ class JmsQueueSpec extends WordSpec with Matchers {
       queue.queueName.size shouldBe > (0)
     }
 
-    "valid broker uri" in {
-      val queue = JmsQueue()
-      queue.brokerUri.size shouldBe > (0)
-    }
-
     "support queue operations" in {
       val queue = JmsQueue()
       queue.size shouldBe 0
@@ -36,7 +31,7 @@ class JmsQueueSpec extends WordSpec with Matchers {
 
     "stop() sanity check" in {
       val queue = JmsQueue()
-      val connFactory = queue.createConnectionFactory
+      val connFactory = queue.createQueueConnectionFactory
       val qconn = connFactory.createQueueConnection
       val qsession = qconn.createQueueSession(true, javax.jms.Session.AUTO_ACKNOWLEDGE)
       val q = qsession.createQueue(queue.queueName)
@@ -46,13 +41,15 @@ class JmsQueueSpec extends WordSpec with Matchers {
       queue.stop()
       Thread.sleep(1000)
 
+      queue.isStarted shouldBe (false)
+
       intercept[JMSException] { connFactory.createQueueConnection }.getMessage should startWith ("Could not create Transport")
       intercept[JMSException] { qsession.createSender(q) }.getMessage should startWith ("The Session is closed")
       intercept[JMSException] { sender.send(msg) }.getMessage should startWith ("The producer is closed")
 
       intercept[IllegalStateException] { queue.toSeq }.getMessage shouldBe "Broker is stopped"
       intercept[IllegalStateException] { queue.toJavaList }.getMessage shouldBe "Broker is stopped"
-      intercept[IllegalStateException] { queue.createConnectionFactory }.getMessage shouldBe "Broker is stopped"
+      intercept[IllegalStateException] { queue.createQueueConnectionFactory }.getMessage shouldBe "Broker is stopped"
     }
 
     "toJavaList sanity check" in {
@@ -65,10 +62,10 @@ class JmsQueueSpec extends WordSpec with Matchers {
       queue.toJavaList should equal (Lists.newArrayList("Portland", "Seattle", "Eugene"))
     }
 
-    "createConnectionFactory sanity check " in {
+    "createQueueConnectionFactory sanity check " in {
       val queue = JmsQueue()
       queue.publishMessage("Hello world")
-      val connFactory = queue.createConnectionFactory
+      val connFactory = queue.createQueueConnectionFactory
       val conn = connFactory.createConnection()
       conn.getMetaData should not be (null)
       val ackMode = javax.jms.Session.SESSION_TRANSACTED
@@ -89,12 +86,14 @@ class JmsQueueSpec extends WordSpec with Matchers {
       val queue1 = JmsQueue()
       val queue2 = JmsQueue()
       queue1.queueName should not be (queue2.queueName)
-      queue1.brokerUri should not be (queue2.brokerUri)
+      queue1.broker.brokerUri should not be (queue2.broker.brokerUri)
       queue1.publishMessage("California")
       queue1.size shouldBe 1
       queue2.size shouldBe 0
       queue2.publishMessage("New York")
       queue1.toSeq shouldBe (Seq("California"))
+      queue2.toSeq shouldBe (Seq("New York"))
+      queue1.stop()
       queue2.toSeq shouldBe (Seq("New York"))
     }
   }

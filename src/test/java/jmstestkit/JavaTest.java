@@ -13,7 +13,7 @@ public class JavaTest {
         queue.publishMessage("Hello");
         queue.publishMessage("Bonjour");
         assertNotNull(queue.queueName());
-        assertNotNull(queue.createConnectionFactory());
+        assertNotNull(queue.createQueueConnectionFactory());
         assertEquals(queue.size(), 2);
         assertEquals(queue.toJavaList(), Lists.newArrayList("Hello", "Bonjour"));
     }
