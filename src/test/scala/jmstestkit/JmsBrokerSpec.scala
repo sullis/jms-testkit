@@ -32,5 +32,34 @@ class JmsBrokerSpec extends WordSpec with Matchers {
       broker.isStarted shouldBe true
       broker.isStopped shouldBe false
     }
+
+    "clientConnectionCount" in {
+      val broker = JmsBroker()
+      broker.clientConnectionCount shouldBe 0
+      val connFactory = broker.createConnectionFactory
+      val conn1 = connFactory.createConnection()
+      val conn2 = connFactory.createConnection()
+      conn1.start()
+      broker.clientConnectionCount shouldBe 1
+      conn2.start()
+      broker.clientConnectionCount shouldBe 2
+      conn1.close()
+      broker.clientConnectionCount shouldBe 1
+      conn2.close()
+      broker.clientConnectionCount shouldBe 0
+    }
+
+    "closeClientConnections" in {
+      val broker = JmsBroker()
+      broker.clientConnectionCount shouldBe 0
+      val connFactory = broker.createConnectionFactory
+      val conn = connFactory.createConnection()
+      conn.start()
+      broker.clientConnectionCount shouldBe 1
+      broker.closeClientConnections()
+      broker.clientConnectionCount shouldBe 0
+      conn.close()
+      broker.clientConnectionCount shouldBe 0
+    }
   }
 }

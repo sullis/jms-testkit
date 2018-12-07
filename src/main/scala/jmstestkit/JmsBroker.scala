@@ -6,6 +6,8 @@ import java.util.UUID
 import org.apache.activemq.ActiveMQConnectionFactory
 import org.apache.activemq.broker.{BrokerFactory, BrokerService}
 
+import scala.util.Try
+
 class JmsBroker(val service: BrokerService) {
   checkState()
 
@@ -13,6 +15,14 @@ class JmsBroker(val service: BrokerService) {
   def isStopped: Boolean = service.isStopped
 
   def brokerUri: String = service.getDefaultSocketURIString
+
+  def closeClientConnections(): Unit = {
+    for (clientConn <- service.getBroker.getClients) {
+      Try { clientConn.stop() }
+    }
+  }
+
+  def clientConnectionCount: Int = service.getBroker.getClients.size
 
   def createQueueConnectionFactory: javax.jms.QueueConnectionFactory = {
     checkState()
