@@ -12,9 +12,10 @@ class JmsQueueSpec extends WordSpec with Matchers {
       queue.queueName.size shouldBe > (0)
     }
 
-    "support queue operations" in {
+    "toSeq sanity check" in {
       val queue = JmsQueue()
       queue.size shouldBe 0
+      queue.toSeq shouldBe Seq.empty
       queue.publishMessage("a1a")
       queue.size shouldBe 1
       queue.publishMessage("b2b")
@@ -27,6 +28,11 @@ class JmsQueueSpec extends WordSpec with Matchers {
       // second check
       queue.size shouldBe 3
       queue.toSeq shouldBe Seq("a1a", "b2b", "c3c")
+
+      val snapshot = queue.toSeq
+      queue.broker.stop()
+      snapshot shouldBe Seq("a1a", "b2b", "c3c")
+
     }
 
     "stop() sanity check" in {

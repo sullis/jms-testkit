@@ -1,6 +1,6 @@
 package jmstestkit
 
-import java.util.UUID
+import java.util.{Collections, UUID}
 
 import javax.jms.{ConnectionFactory, QueueConnectionFactory, TextMessage}
 
@@ -32,7 +32,12 @@ class JmsQueue(val broker: JmsBroker) {
     val session = qconn.createQueueSession(false, javax.jms.Session.AUTO_ACKNOWLEDGE)
     val queue = session.createQueue(queueName)
     qconn.start
-    session.createBrowser(queue).getEnumeration.asScala.toSeq.asInstanceOf[Seq[TextMessage]].map(_.getText)
+    val browser = session.createBrowser(queue)
+    val result = Collections.list(browser.getEnumeration).asScala.asInstanceOf[Seq[TextMessage]].map(_.getText)
+    Try { browser.close() }
+    Try { session.close() }
+    Try { qconn.close() }
+    result
   }
 
   def toJavaList(): java.util.List[String] = {
