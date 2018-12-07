@@ -87,6 +87,7 @@ class JmsQueueSpec extends WordSpec with Matchers {
       val queue2 = JmsQueue()
       queue1.queueName should not be (queue2.queueName)
       queue1.broker.brokerUri should not be (queue2.broker.brokerUri)
+      queue1.broker.hashCode should not be (queue2.broker.hashCode)
       queue1.publishMessage("California")
       queue1.size shouldBe 1
       queue2.size shouldBe 0
