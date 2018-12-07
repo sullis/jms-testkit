@@ -2,9 +2,10 @@ package jmstestkit
 
 import java.util.UUID
 
-import javax.jms.{QueueConnectionFactory, ConnectionFactory, TextMessage}
+import javax.jms.{ConnectionFactory, QueueConnectionFactory, TextMessage}
 
 import scala.collection.JavaConverters._
+import scala.util.Try
 
 class JmsQueue(val broker: JmsBroker) {
 
@@ -44,6 +45,9 @@ class JmsQueue(val broker: JmsBroker) {
     val queue = session.createQueue(queueName)
     val sender = session.createSender(queue)
     sender.send(session.createTextMessage(msg))
+    Try { sender.close() }
+    Try { session.close() }
+    Try { qconn.close() }
   }
 
   def stop(): Unit = {
