@@ -10,6 +10,7 @@ class JmsBrokerSpec extends WordSpec with Matchers {
       broker.restart()
       Thread.sleep(150)
       broker.isStarted shouldBe true
+      broker.isStopped shouldBe false
     }
 
     "restart a stopped broker" in {
@@ -19,6 +20,7 @@ class JmsBrokerSpec extends WordSpec with Matchers {
       broker.restart()
       Thread.sleep(150)
       broker.isStarted shouldBe true
+      broker.isStopped shouldBe false
     }
   }
 }

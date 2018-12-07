@@ -10,6 +10,7 @@ class JmsBroker(val service: BrokerService) {
   checkState()
 
   def isStarted: Boolean = service.isStarted
+  def isStopped: Boolean = service.isStopped
 
   def brokerUri: String = service.getDefaultSocketURIString
 
