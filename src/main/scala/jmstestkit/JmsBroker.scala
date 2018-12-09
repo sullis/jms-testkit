@@ -3,8 +3,10 @@ package jmstestkit
 import java.net.URI
 import java.util.UUID
 
+import javax.naming.Context
 import org.apache.activemq.ActiveMQConnectionFactory
 import org.apache.activemq.broker.{BrokerFactory, BrokerService}
+import org.apache.activemq.jndi.ActiveMQInitialContextFactory
 
 import scala.util.Try
 
@@ -37,6 +39,24 @@ class JmsBroker(val service: BrokerService) {
   def createConnectionFactory: javax.jms.ConnectionFactory = {
     checkState()
     new ActiveMQConnectionFactory(service.getDefaultSocketURIString)
+  }
+
+  def createJndiContext: javax.naming.Context = {
+    import scala.collection.JavaConverters._
+    val factory = new ActiveMQInitialContextFactory()
+    val env = new java.util.Hashtable[String, String]()
+    env.put(Context.PROVIDER_URL, brokerUri)
+    val destinations = service.getBroker.getDurableDestinations.asScala
+    for (dest <- destinations) {
+      val name = dest.getPhysicalName
+      if (dest.isQueue) {
+        env.put("queue." + name, name)
+      }
+      else if (dest.isTopic) {
+        env.put("topic." + name, name)
+      }
+    }
+    factory.getInitialContext(env)
   }
 
   def start(force: Boolean = true): Unit = service.start(force)

@@ -61,5 +61,20 @@ class JmsBrokerSpec extends WordSpec with Matchers {
       conn.close()
       broker.clientConnectionCount shouldBe 0
     }
+
+    "createJndiContext" in {
+      val queue = JmsQueue()
+      val broker = queue.broker
+      queue.publishMessage("Hello world!")
+      val ctx = broker.createJndiContext
+
+      val jndiQueue = ctx.lookup(queue.queueName).asInstanceOf[javax.jms.Queue]
+      jndiQueue.getQueueName shouldBe queue.queueName
+
+      intercept[javax.naming.NameNotFoundException] { ctx.lookup("bogusThing") }.getMessage shouldBe ("bogusThing")
+
+      ctx.close()
+    }
+
   }
 }
