@@ -53,6 +53,12 @@ QueueConnectionFactory connFactory = queue.createQueueConnectionFactory(); // ja
 
 # Related resources
 
+- [http://activemq.apache.org/how-to-unit-test-jms-code.html]
+
+- [https://stackoverflow.com/questions/2870431/unit-testing-with-jms-activemq]
+
+- [https://stackoverflow.com/questions/14342430/are-there-any-mq-servers-that-can-run-embedded-in-a-java-process]
+
 - [https://github.com/apache/activemq/blob/master/activemq-tooling/activemq-junit/src/main/java/org/apache/activemq/junit/EmbeddedActiveMQBroker.java]
 
 - [https://github.com/apache/camel/blob/master/components/camel-sjms/src/test/java/org/apache/camel/component/sjms/batch/EmbeddedActiveMQBroker.java]
@@ -60,10 +66,4 @@ QueueConnectionFactory connFactory = queue.createQueueConnectionFactory(); // ja
 - [https://github.com/apache/activemq-artemis/blob/master/artemis-junit/src/main/java/org/apache/activemq/artemis/junit/EmbeddedJMSResource.java]
 
 - [https://github.com/jkorab/camel-jms-batch/blob/master/src/test/java/org/apache/camel/component/sjms/batch/EmbeddedActiveMQBroker.java]
-
-- [http://activemq.apache.org/how-to-unit-test-jms-code.html]
-
-- [https://stackoverflow.com/questions/2870431/unit-testing-with-jms-activemq]
-
-- [https://stackoverflow.com/questions/14342430/are-there-any-mq-servers-that-can-run-embedded-in-a-java-process]
 
