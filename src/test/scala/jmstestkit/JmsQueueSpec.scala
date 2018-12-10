@@ -66,6 +66,9 @@ class JmsQueueSpec extends WordSpec with Matchers {
       queue.publishMessage("Seattle")
       queue.publishMessage("Eugene")
       queue.toJavaList should equal (Lists.newArrayList("Portland", "Seattle", "Eugene"))
+      val snapshot = queue.toJavaList
+      queue.stop()
+      snapshot.size shouldBe 3
     }
 
     "createQueueConnectionFactory sanity check " in {
