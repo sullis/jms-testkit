@@ -1,5 +1,6 @@
 package jmstestkit
 
+import javax.naming.Context
 import org.scalatest.{Matchers, WordSpec}
 
 class JmsBrokerSpec extends WordSpec with Matchers {
@@ -76,5 +77,13 @@ class JmsBrokerSpec extends WordSpec with Matchers {
       ctx.close()
     }
 
+    "createJndiEnvironment" in {
+      val queue = JmsQueue()
+      val broker = queue.broker
+      queue.publishMessage("Hello world!")
+      val env = broker.createJndiEnvironment
+      env.get(s"queue.${queue.queueName}") shouldBe queue.queueName
+      env.get(Context.PROVIDER_URL) shouldBe broker.brokerUri
+    }
   }
 }

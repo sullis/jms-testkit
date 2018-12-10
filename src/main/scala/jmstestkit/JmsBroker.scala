@@ -41,9 +41,8 @@ class JmsBroker(val service: BrokerService) {
     new ActiveMQConnectionFactory(service.getDefaultSocketURIString)
   }
 
-  def createJndiContext: javax.naming.Context = {
+  def createJndiEnvironment: java.util.Hashtable[String, String] = {
     import scala.collection.JavaConverters._
-    val factory = new ActiveMQInitialContextFactory()
     val env = new java.util.Hashtable[String, String]()
     env.put(Context.PROVIDER_URL, brokerUri)
     val destinations = service.getBroker.getDurableDestinations.asScala
@@ -56,7 +55,12 @@ class JmsBroker(val service: BrokerService) {
         env.put("topic." + name, name)
       }
     }
-    factory.getInitialContext(env)
+    env
+  }
+
+  def createJndiContext: javax.naming.Context = {
+    val factory = new ActiveMQInitialContextFactory
+    factory.getInitialContext(createJndiEnvironment)
   }
 
   def start(force: Boolean = true): Unit = service.start(force)
