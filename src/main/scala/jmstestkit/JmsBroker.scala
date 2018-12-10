@@ -45,6 +45,7 @@ class JmsBroker(val service: BrokerService) {
     import scala.collection.JavaConverters._
     val env = new java.util.Hashtable[String, String]()
     env.put(Context.PROVIDER_URL, brokerUri)
+    env.put(Context.INITIAL_CONTEXT_FACTORY, classOf[ActiveMQInitialContextFactory].getName)
     val destinations = service.getBroker.getDurableDestinations.asScala
     for (dest <- destinations) {
       val name = dest.getPhysicalName

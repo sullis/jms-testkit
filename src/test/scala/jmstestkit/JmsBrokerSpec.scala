@@ -1,6 +1,7 @@
 package jmstestkit
 
 import javax.naming.Context
+import org.apache.activemq.jndi.ActiveMQInitialContextFactory
 import org.scalatest.{Matchers, WordSpec}
 
 class JmsBrokerSpec extends WordSpec with Matchers {
@@ -84,6 +85,7 @@ class JmsBrokerSpec extends WordSpec with Matchers {
       val env = broker.createJndiEnvironment
       env.get(s"queue.${queue.queueName}") shouldBe queue.queueName
       env.get(Context.PROVIDER_URL) shouldBe broker.brokerUri
+      env.get(Context.INITIAL_CONTEXT_FACTORY) shouldBe classOf[ActiveMQInitialContextFactory].getName
     }
   }
 }
