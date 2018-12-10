@@ -6,7 +6,7 @@ in-memory JMS library
 
 ```
 
-"io.github.sullis" %% "jms-testkit" % "0.0.8" % Test
+"io.github.sullis" %% "jms-testkit" % "0.0.11" % Test
 
 
 ```
