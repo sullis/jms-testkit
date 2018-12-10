@@ -86,6 +86,8 @@ class JmsQueueSpec extends WordSpec with Matchers {
       val producer = session.createProducer(q)
       producer.send(textMessage)
       session.commit()
+      producer.send(session.createTextMessage("Please rollback this message."))
+      session.rollback()
       session.close()
       conn.close()
       queue.toSeq shouldBe Seq("Hello world", "Excellent message")
