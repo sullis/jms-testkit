@@ -38,6 +38,7 @@ val connFactory = queue.createQueueConnectionFactory // javax.jms.QueueConnectio
     <groupId>io.github.sullis</groupId>
     <artifactId>jms-testkit_2.12</artifactId>
     <version>0.0.11</version>
+    <scope>test</scope>
 </dependency>
 
 ```
