@@ -31,6 +31,17 @@ val connFactory = queue.createQueueConnectionFactory // javax.jms.QueueConnectio
 
 ```
 
+# Maven pom.xml
+
+```
+<dependency>
+    <groupId>io.github.sullis</groupId>
+    <artifactId>jms-testkit_2.12</artifactId>
+    <version>0.0.11</version>
+</dependency>
+
+```
+
 # Java code example
 
 ```
