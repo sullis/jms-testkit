@@ -5,6 +5,13 @@ import org.apache.activemq.jndi.ActiveMQInitialContextFactory
 import org.scalatest.{Matchers, WordSpec}
 
 class JmsBrokerSpec extends WordSpec with Matchers {
+  "construction" should {
+    "unique broker uri's" in {
+      val broker1 = JmsBroker()
+      val broker2 = JmsBroker()
+      broker1.brokerUri shouldNot equal (broker2.brokerUri)
+    }
+  }
   "createConnectionFactory" should {
      "returns a unique object" in {
        val broker = JmsBroker()
