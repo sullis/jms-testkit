@@ -3,3 +3,5 @@
 out
 .classpath
 .metals/
+.bloop/
+project/.bloop/
