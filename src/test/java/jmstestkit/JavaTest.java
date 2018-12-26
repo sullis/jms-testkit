@@ -8,7 +8,20 @@ import static org.testng.Assert.*;
 public class JavaTest {
 
     @Test
-    public void sanityCheck()  {
+    public void brokerSanityCheck()  {
+        JmsBroker broker1 = JmsBroker.apply();
+        JmsBroker broker2 = JmsBroker.apply();
+        assertNotEquals(broker1.brokerUri(), broker2.brokerUri());
+        assertTrue(broker1.isStarted());
+        assertTrue(broker2.isStarted());
+        broker1.stop();
+        broker2.stop();
+        assertTrue(broker1.isStopped());
+        assertTrue(broker2.isStopped());
+    }
+
+    @Test
+    public void queueSanityCheck()  {
         JmsQueue queue = JmsQueue.apply();
         queue.publishMessage("Hello");
         queue.publishMessage("Bonjour");
