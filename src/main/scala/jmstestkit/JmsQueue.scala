@@ -58,6 +58,10 @@ class JmsQueue(val broker: JmsBroker) {
   def stop(): Unit = {
     broker.stop()
   }
+
+  override def toString(): String = {
+    getClass.getSimpleName + s"[${queueName}]"
+  }
 }
 
 object JmsQueue {
