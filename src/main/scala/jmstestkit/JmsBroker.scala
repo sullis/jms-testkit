@@ -73,6 +73,10 @@ class JmsBroker(val service: BrokerService) {
 
   def stop(): Unit = service.stop()
 
+  override def toString(): String = {
+    getClass.getSimpleName + s"[${brokerUri}]"
+  }
+
   private def checkState(): Unit = {
     if (service.isStopped) {
       throw new IllegalStateException("Broker is stopped")

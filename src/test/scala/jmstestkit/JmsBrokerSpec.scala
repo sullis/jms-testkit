@@ -11,7 +11,13 @@ class JmsBrokerSpec extends WordSpec with Matchers {
       val broker2 = JmsBroker()
       broker1.brokerUri shouldNot equal (broker2.brokerUri)
     }
+    "unique toString" in {
+      val broker1 = JmsBroker()
+      val broker2 = JmsBroker()
+      broker1.toString shouldNot equal (broker2.toString)
+    }
   }
+
   "createConnectionFactory" should {
      "returns a unique object" in {
        val broker = JmsBroker()
