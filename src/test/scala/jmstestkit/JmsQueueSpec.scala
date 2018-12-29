@@ -44,10 +44,11 @@ class JmsQueueSpec extends WordSpec with Matchers {
       val sender = qsession.createSender(q)
       val msg = qsession.createTextMessage("abcdef")
 
-      queue.stop()
+      queue.broker.stop()
       Thread.sleep(1000)
 
-      queue.isStarted shouldBe (false)
+      queue.broker.isStarted shouldBe (false)
+      queue.broker.isStopped shouldBe (true)
 
       intercept[JMSException] { connFactory.createQueueConnection }.getMessage should startWith ("Could not create Transport")
       intercept[JMSException] { qsession.createSender(q) }.getMessage should startWith ("The Session is closed")
@@ -67,7 +68,7 @@ class JmsQueueSpec extends WordSpec with Matchers {
       queue.publishMessage("Eugene")
       queue.toJavaList should equal (Lists.newArrayList("Portland", "Seattle", "Eugene"))
       val snapshot = queue.toJavaList
-      queue.stop()
+      queue.broker.stop()
       snapshot.size shouldBe 3
     }
 
@@ -105,7 +106,7 @@ class JmsQueueSpec extends WordSpec with Matchers {
       queue2.publishMessage("New York")
       queue1.toSeq shouldBe (Seq("California"))
       queue2.toSeq shouldBe (Seq("New York"))
-      queue1.stop()
+      queue1.broker.stop()
       queue2.toSeq shouldBe (Seq("New York"))
     }
   }

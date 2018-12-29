@@ -9,7 +9,6 @@ import scala.util.Try
 
 class JmsQueue(val broker: JmsBroker) {
 
-  def isStarted(): Boolean = broker.isStarted
   val queueName: String = "Queue-" + UUID.randomUUID.toString
 
   def size: Long = calculateQueueSize(queueName)
@@ -53,10 +52,6 @@ class JmsQueue(val broker: JmsBroker) {
     Try { sender.close() }
     Try { session.close() }
     Try { qconn.close() }
-  }
-
-  def stop(): Unit = {
-    broker.stop()
   }
 
   override def toString(): String = {
