@@ -19,12 +19,11 @@ trait JmsTestKit {
 
   def withQueue()(test: JmsQueue => Unit): Unit = {
     val queue = JmsQueue()
-    val broker = queue.broker
     try {
       test(queue)
       Thread.sleep(500)
     } finally {
-      broker.stop()
+      queue.broker.stop()
     }
   }
 
