@@ -79,3 +79,5 @@ QueueConnectionFactory connFactory = queue.createQueueConnectionFactory(); // ja
 
 - [https://github.com/jkorab/camel-jms-batch/blob/master/src/test/java/org/apache/camel/component/sjms/batch/EmbeddedActiveMQBroker.java]
 
+- [https://dzone.com/articles/mocking-jms-infrastructure]
+
