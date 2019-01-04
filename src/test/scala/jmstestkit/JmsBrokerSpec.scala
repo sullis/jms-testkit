@@ -1,6 +1,7 @@
 package jmstestkit
 
 import javax.naming.Context
+import org.apache.activemq.broker.BrokerStoppedException
 import org.apache.activemq.jndi.ActiveMQInitialContextFactory
 import org.scalatest.{Matchers, WordSpec}
 
@@ -72,6 +73,9 @@ class JmsBrokerSpec extends WordSpec with Matchers {
       broker.clientConnectionCount shouldBe 1
       conn2.close()
       broker.clientConnectionCount shouldBe 0
+      broker.stop()
+      val ex = intercept[BrokerStoppedException] { broker.clientConnectionCount }
+      ex.getCause.getMessage shouldBe ("Stop invoked")
     }
 
     "closeClientConnections" in {
