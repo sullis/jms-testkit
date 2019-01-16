@@ -62,6 +62,10 @@ System.out.println("snapshot: " + queue.toJavaList());
 QueueConnectionFactory connFactory = queue.createQueueConnectionFactory(); // javax.jms.QueueConnectionFactory
 
 ```
+# Projects that use [jms-testkit]
+
+- [fs2-jms https://github.com/kiambogo/fs2-jms]
+- [Alpakka https://github.com/akka/alpakka/tree/master/jms/src]
 
 # Related resources
 
