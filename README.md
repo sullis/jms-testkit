@@ -64,8 +64,8 @@ QueueConnectionFactory connFactory = queue.createQueueConnectionFactory(); // ja
 ```
 # Projects that use [jms-testkit]
 
-- [fs2-jms https://github.com/kiambogo/fs2-jms]
-- [Alpakka https://github.com/akka/alpakka/tree/master/jms/src]
+- [fs2-jms](https://github.com/kiambogo/fs2-jms)
+- [Alpakka](https://github.com/akka/alpakka/tree/master/jms/src)
 
 # Related resources
 
