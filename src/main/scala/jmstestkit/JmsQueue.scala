@@ -32,7 +32,7 @@ class JmsQueue(val broker: JmsBroker) {
     val queue = session.createQueue(queueName)
     qconn.start
     val browser = session.createBrowser(queue)
-    val result = Collections.list(browser.getEnumeration).asScala.asInstanceOf[Seq[TextMessage]].map(_.getText)
+    val result = Collections.list(browser.getEnumeration).asScala.asInstanceOf[Iterable[TextMessage]].map(_.getText).toSeq
     Try { browser.close() }
     Try { session.close() }
     Try { qconn.close() }
