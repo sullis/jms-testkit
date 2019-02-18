@@ -97,6 +97,7 @@ object JmsBroker {
     brokerService.setUseJmx(false)
     brokerService.setStartAsync(false)
     brokerService.start()
+    brokerService.waitUntilStarted()
     new JmsBroker(brokerService)
   }
 }
