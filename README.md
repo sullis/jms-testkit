@@ -6,7 +6,7 @@ in-memory JMS library
 
 ```
 
-"io.github.sullis" %% "jms-testkit" % "0.2.3" % Test
+"io.github.sullis" %% "jms-testkit" % "0.2.6" % Test
 
 
 ```
@@ -37,7 +37,7 @@ val connFactory = queue.createQueueConnectionFactory // javax.jms.QueueConnectio
 <dependency>
     <groupId>io.github.sullis</groupId>
     <artifactId>jms-testkit_2.12</artifactId>
-    <version>0.2.3</version>
+    <version>0.2.6</version>
     <scope>test</scope>
 </dependency>
 
