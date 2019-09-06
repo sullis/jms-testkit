@@ -5,3 +5,4 @@ out
 .metals/
 .bloop/
 project/.bloop/
+target/
