@@ -5,6 +5,8 @@ import org.apache.activemq.broker.BrokerStoppedException
 import org.apache.activemq.jndi.ActiveMQInitialContextFactory
 import org.scalatest.{Matchers, WordSpec}
 
+import scala.util.Try
+
 class JmsBrokerSpec extends WordSpec with Matchers {
   "construction" should {
     "unique broker uri's" in {
@@ -87,7 +89,7 @@ class JmsBrokerSpec extends WordSpec with Matchers {
       broker.clientConnectionCount shouldBe 1
       broker.closeClientConnections()
       broker.clientConnectionCount shouldBe 0
-      conn.close()
+      Try { conn.close() }
       broker.clientConnectionCount shouldBe 0
     }
 
