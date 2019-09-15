@@ -1,6 +1,8 @@
 # jms-testkit
 in-memory JMS library
 
+TESTING TESTING
+
 
 # Scala build.sbt
 
