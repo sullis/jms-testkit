@@ -8,6 +8,7 @@ jobs:
     strategy:
       matrix:
         java: [ '1.8.0', '11.0.x' ]
+        scala: [ '2.13.0', '2.12.10', '2.11.12' ]
     steps:
     - uses: actions/checkout@v1
     - name: Set up JDK
@@ -17,4 +18,4 @@ jobs:
     - name: print Java version
       run: java -version
     - name: Run tests
-      run: sbt +clean +test
+      run: sbt ++${{ matrix.scala }} clean test
