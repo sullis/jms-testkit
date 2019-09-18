@@ -59,7 +59,7 @@ System.out.println("queueName: " + queue.queueName());
 System.out.println("size: " + queue.size());
 System.out.println("snapshot: " + queue.toJavaList());
 
-QueueConnectionFactory connFactory = queue.createQueueConnectionFactory(); // javax.jms.QueueConnectionFactory
+QueueConnectionFactory connFactory = queue.createQueueConnectionFactory();
 
 ```
 # Projects that use [jms-testkit]
