@@ -3,11 +3,12 @@ package jmstestkit
 import javax.naming.Context
 import org.apache.activemq.broker.BrokerStoppedException
 import org.apache.activemq.jndi.ActiveMQInitialContextFactory
-import org.scalatest.{Matchers, WordSpec}
 
 import scala.util.Try
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 
-class JmsBrokerSpec extends WordSpec with Matchers {
+class JmsBrokerSpec extends AnyWordSpec with Matchers {
   "construction" should {
     "unique broker uri's" in {
       val broker1 = JmsBroker()

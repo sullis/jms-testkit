@@ -1,10 +1,11 @@
 package jmstestkit
 
-import org.scalatest.{Matchers, WordSpec}
 import com.google.common.collect.Lists
 import javax.jms.JMSException
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 
-class JmsQueueSpec extends WordSpec with Matchers {
+class JmsQueueSpec extends AnyWordSpec with Matchers {
 
   "JmsQueue" should {
     "valid queue name" in {
