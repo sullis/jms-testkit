@@ -1,9 +1,10 @@
 package jmstestkit
 
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 
 class JmsTestKitSpec
-  extends WordSpec
+  extends AnyWordSpec
   with Matchers
   with JmsTestKit {
 
