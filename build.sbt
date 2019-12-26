@@ -18,7 +18,7 @@ libraryDependencies ++= Seq(
   "org.apache.activemq" % "activemq-broker"   % activeMqVersion,
   "org.apache.activemq" % "activemq-client"   % activeMqVersion,
   "org.scalatest" %% "scalatest" % "3.1.0" % Test,
-  "org.testng" % "testng" % "7.0.0" % Test,
+  "org.testng" % "testng" % "7.1.0" % Test,
   "com.google.guava" % "guava" % "28.1-jre" % Test
 )
 
