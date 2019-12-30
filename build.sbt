@@ -24,10 +24,6 @@ libraryDependencies ++= Seq(
 
 updateOptions := updateOptions.value.withGigahorse(false)
 
-publishMavenStyle := true
-
-publishTo := sonatypePublishTo.value
-
 publishArtifact in Test := false
 
 pomIncludeRepository := { _ => false }
