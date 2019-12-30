@@ -24,12 +24,6 @@ libraryDependencies ++= Seq(
 
 updateOptions := updateOptions.value.withGigahorse(false)
 
-useGpg := true
-
-releaseCrossBuild := true
-
-releasePublishArtifactsAction := PgpKeys.publishSigned.value
-
 publishMavenStyle := true
 
 publishTo := sonatypePublishTo.value
