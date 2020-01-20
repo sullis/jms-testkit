@@ -2,6 +2,8 @@
 *.log
 out
 .classpath
+.project
+.settings/
 .metals/
 .bloop/
 project/.bloop/
