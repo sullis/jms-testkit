@@ -12,7 +12,7 @@ scalacOptions += "-target:jvm-1.8"
 
 javacOptions ++= Seq("-source", "1.8", "-target", "1.8")
 
-val activeMqVersion = "5.15.12"
+val activeMqVersion = "5.15.13"
 
 libraryDependencies ++= Seq(
   "org.apache.activemq" % "activemq-broker"   % activeMqVersion,
