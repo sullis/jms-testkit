@@ -12,6 +12,8 @@ scalacOptions += "-target:jvm-1.8"
 
 javacOptions ++= Seq("-source", "1.8", "-target", "1.8")
 
+parallelExecution := true
+
 val activeMqVersion = "5.16.0"
 
 libraryDependencies ++= Seq(
