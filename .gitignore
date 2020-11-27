@@ -9,3 +9,4 @@ out
 project/.bloop/
 target/
 .idea/
+.bsp/
