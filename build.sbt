@@ -21,7 +21,7 @@ libraryDependencies ++= Seq(
   "org.apache.activemq" % "activemq-client"   % activeMqVersion,
   "org.scalatest" %% "scalatest" % "3.2.3" % Test,
   "org.testng" % "testng" % "7.3.0" % Test,
-  "com.google.guava" % "guava" % "30.0-jre" % Test
+  "com.google.guava" % "guava" % "30.1-jre" % Test
 )
 
 updateOptions := updateOptions.value.withGigahorse(false)
