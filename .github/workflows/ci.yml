@@ -35,6 +35,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: git fetch --unshallow
+        run:  git fetch --unshallow
       - name: Set up JDK 8
         uses: actions/setup-java@v1
         with:
