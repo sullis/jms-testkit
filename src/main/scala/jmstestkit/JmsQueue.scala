@@ -26,7 +26,7 @@ class JmsQueue(val broker: JmsBroker) {
     counts.sum
   }
 
-  def toSeq(): Seq[String] = {
+  def toSeq: Seq[String] = {
     val qconn = createQueueConnectionFactory.createQueueConnection()
     val session = qconn.createQueueSession(false, javax.jms.Session.AUTO_ACKNOWLEDGE)
     val queue = session.createQueue(queueName)
@@ -39,7 +39,7 @@ class JmsQueue(val broker: JmsBroker) {
     result
   }
 
-  def toJavaList(): java.util.List[String] = {
+  def toJavaList: java.util.List[String] = {
     java.util.Collections.unmodifiableList(toSeq.asJava)
   }
 
