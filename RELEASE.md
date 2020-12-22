@@ -1,6 +1,8 @@
 # release instructions
 
 ```
-$ sbt +clean release
-$ sbt sonatypeRelease
+$ git checkout master
+$ git pull
+$ git tag vx.y.z
+$ git push --tags
 ```
