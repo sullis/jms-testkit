@@ -88,4 +88,3 @@ QueueConnectionFactory connFactory = queue.createQueueConnectionFactory();
 # Acknowledgements
 
 This project uses [sbt-ci-release](https://github.com/olafurpg/sbt-ci-release)
-
