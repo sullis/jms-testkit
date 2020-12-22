@@ -85,3 +85,7 @@ QueueConnectionFactory connFactory = queue.createQueueConnectionFactory();
 
 - mockrunner-jms [http://mockrunner.github.io/mockrunner/examplesjms.html]
 
+# Acknowledgements
+
+This project uses [sbt-ci-release](https://github.com/olafurpg/sbt-ci-release)
+
