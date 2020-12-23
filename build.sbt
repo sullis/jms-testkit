@@ -44,10 +44,6 @@ licenses := Seq("APL2" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt"))
 homepage := Some(url("https://github.com/sullis/jms-testkit"))
 
 pomExtra := (
-  <scm>
-    <url>https://github.com/sullis/jms-testkit.git</url>
-    <connection>scm:git:git@github.com:sullis/jms-testkit.git</connection>
-  </scm>
   <developers>
     <developer>
       <id>sullis</id>
