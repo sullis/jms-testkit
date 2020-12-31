@@ -44,4 +44,20 @@ class JmsTestKitSpec
       conn.close()
     }
   }
+
+  def topicSanityCheck: Unit = {
+    withTopic() { topic =>
+      topic.toSeq.size shouldBe 0
+      topic.publishMessage("Hello world")
+      topic.toSeq.size shouldBe 1
+      val broker = topic.broker
+      broker.isStarted shouldBe true
+      broker.isStopped shouldBe false
+      val cf = broker.createConnectionFactory
+      val conn = cf.createConnection
+      conn.start()
+      conn.stop()
+      conn.close()
+    }
+  }
 }

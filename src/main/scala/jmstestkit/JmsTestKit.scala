@@ -27,4 +27,14 @@ trait JmsTestKit {
     }
   }
 
+  def withTopic()(test: JmsTopic => Unit): Unit = {
+    val topic = JmsTopic()
+    try {
+      test(topic)
+      Thread.sleep(500)
+    } finally {
+      topic.broker.stop()
+    }
+  }
+
 }
