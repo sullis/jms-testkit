@@ -1,5 +1,6 @@
 package jmstestkit
 
+import org.scalatest.concurrent.Eventually.eventually
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
@@ -50,7 +51,11 @@ class JmsTestKitSpec
       withTopic() { topic =>
         topic.toSeq.size shouldBe 0
         topic.publishMessage("Hello world")
-        topic.toSeq.size shouldBe 1
+
+        eventually {
+          topic.toSeq.size shouldBe 1
+        }
+
         val broker = topic.broker
         broker.isStarted shouldBe true
         broker.isStopped shouldBe false
