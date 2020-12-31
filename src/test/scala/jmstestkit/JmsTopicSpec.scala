@@ -1,5 +1,7 @@
 package jmstestkit
 
+import com.google.common.collect.Lists
+import org.scalatest.concurrent.Eventually.eventually
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
@@ -11,6 +13,31 @@ class JmsTopicSpec extends AnyWordSpec with Matchers {
     "valid topic name" in {
       val topic = JmsTopic()
       topic.topicName.size shouldBe > (0)
+      topic.broker.stop()
+    }
+
+    "toSeq returns correct values" in {
+      val topic = JmsTopic()
+      topic.publishMessage("message1")
+      topic.publishMessage("message2")
+
+      eventually {
+        topic.toSeq shouldBe Seq("message1", "message2")
+      }
+
+      topic.broker.stop()
+    }
+
+    "toJavaList returns correct values" in {
+      val topic = JmsTopic()
+      topic.publishMessage("jMessage1")
+      topic.publishMessage("jMessage2")
+
+      eventually {
+        topic.toJavaList shouldBe (Lists.newArrayList("jMessage1", "jMessage2"))
+      }
+
+      topic.broker.stop()
     }
 
     "stop() sanity check" in {
@@ -60,10 +87,18 @@ class JmsTopicSpec extends AnyWordSpec with Matchers {
       val topic1 = JmsTopic()
       val topic2 = JmsTopic()
       topic1.topicName should not be (topic2.topicName)
+
       topic1.broker.brokerUri should not be (topic2.broker.brokerUri)
       topic1.broker.hashCode should not be (topic2.broker.hashCode)
+
       topic1.publishMessage("California")
       topic2.publishMessage("New York")
+
+      eventually {
+        topic1.toSeq shouldBe Seq("California")
+        topic2.toSeq shouldBe Seq("New York")
+      }
+
       topic1.broker.stop()
       topic2.broker.stop()
     }
