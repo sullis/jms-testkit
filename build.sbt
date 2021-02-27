@@ -4,7 +4,7 @@ name := "jms-testkit"
 
 organization := "io.github.sullis"
 
-scalaVersion := "2.12.12"
+scalaVersion := "2.12.13"
 
 crossScalaVersions := Seq(scalaVersion.value, "2.13.5", "2.13.5", "3.0.0-RC1")
 
