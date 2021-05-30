@@ -37,7 +37,7 @@ libraryDependencies ++= Seq(
 
 updateOptions := updateOptions.value.withGigahorse(false)
 
-publishArtifact in Test := false
+Test / publishArtifact := false
 
 pomIncludeRepository := { _ => false }
 
