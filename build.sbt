@@ -29,7 +29,7 @@ libraryDependencies ++= Seq(
   "org.apache.activemq" % "activemq-broker"   % activeMqVersion,
   "org.apache.activemq" % "activemq-client"   % activeMqVersion,
   "org.scalatest" %% "scalatest" % "3.2.12" % Test,
-  "org.testng" % "testng" % "7.5" % Test,
+  "org.testng" % "testng" % "7.6.1" % Test,
   "com.google.guava" % "guava" % "31.1-jre" % Test,
   "ch.qos.logback" % "logback-classic" % "1.2.11" % Test,
   "ch.qos.logback" % "logback-core" % "1.2.11" % Test
