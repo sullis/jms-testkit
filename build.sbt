@@ -6,7 +6,7 @@ organization := "io.github.sullis"
 
 scalaVersion := "2.12.17"
 
-crossScalaVersions := Seq(scalaVersion.value, "2.11.12", "2.13.10", "3.3.0")
+crossScalaVersions := Seq(scalaVersion.value, "2.11.12", "2.13.11", "3.3.0")
 
 scalacOptions += "-target:jvm-1.8"
 
@@ -30,7 +30,7 @@ libraryDependencies ++= Seq(
   "org.apache.activemq" % "activemq-client"   % activeMqVersion,
   "org.scalatest" %% "scalatest" % "3.2.16" % Test,
   "org.testng" % "testng" % "7.5" % Test,
-  "com.google.guava" % "guava" % "32.0.0-jre" % Test,
+  "com.google.guava" % "guava" % "32.0.1-jre" % Test,
   "ch.qos.logback" % "logback-classic" % "1.2.11" % Test,
   "ch.qos.logback" % "logback-core" % "1.2.11" % Test
 )
