@@ -28,7 +28,7 @@ val activeMqVersion = "5.16.5"
 libraryDependencies ++= Seq(
   "org.apache.activemq" % "activemq-broker"   % activeMqVersion,
   "org.apache.activemq" % "activemq-client"   % activeMqVersion,
-  "org.scalatest" %% "scalatest" % "3.2.16" % Test,
+  "org.scalatest" %% "scalatest" % "3.2.17" % Test,
   "org.testng" % "testng" % "7.5" % Test,
   "com.google.guava" % "guava" % "32.1.2-jre" % Test,
   "ch.qos.logback" % "logback-classic" % "1.2.11" % Test,
