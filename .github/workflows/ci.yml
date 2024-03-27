@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        java: [ '8', '11', '17', '21' ]
+        java: [ '8', '11', '17', '21', '22' ]
         scala: [ '2.13.13', '2.12.19', '2.11.12', '3.4.0' ]
     steps:
     - uses: actions/checkout@v4
