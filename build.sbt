@@ -31,8 +31,8 @@ libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "3.2.18" % Test,
   "org.testng" % "testng" % "7.9.0" % Test,
   "com.google.guava" % "guava" % "33.1.0-jre" % Test,
-  "ch.qos.logback" % "logback-classic" % "1.5.2" % Test,
-  "ch.qos.logback" % "logback-core" % "1.5.2" % Test
+  "ch.qos.logback" % "logback-classic" % "1.5.4" % Test,
+  "ch.qos.logback" % "logback-core" % "1.5.4" % Test
 )
 
 updateOptions := updateOptions.value.withGigahorse(false)
