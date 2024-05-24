@@ -8,8 +8,6 @@ scalaVersion := "2.12.19"
 
 crossScalaVersions := Seq(scalaVersion.value, "2.11.12", "2.13.14", "3.4.2")
 
-scalacOptions += "-target:jvm-1.8"
-
 scalacOptions ++= {
       CrossVersion.partialVersion(scalaVersion.value) match {
         case Some((3, _)) =>
@@ -19,7 +17,7 @@ scalacOptions ++= {
       }
     }
 
-javacOptions ++= Seq("-source", "1.8", "-target", "1.8")
+javacOptions ++= Seq("-source", "11", "-target", "11")
 
 parallelExecution := true
 
