@@ -1,7 +1,7 @@
 package jmstestkit
 
 import com.google.common.collect.Lists
-import javax.jms.JMSException
+import jakarta.jms.JMSException
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
@@ -40,7 +40,7 @@ class JmsQueueSpec extends AnyWordSpec with Matchers {
       val queue = JmsQueue()
       val connFactory = queue.createQueueConnectionFactory
       val qconn = connFactory.createQueueConnection
-      val qsession = qconn.createQueueSession(true, javax.jms.Session.AUTO_ACKNOWLEDGE)
+      val qsession = qconn.createQueueSession(true, jakarta.jms.Session.AUTO_ACKNOWLEDGE)
       val q = qsession.createQueue(queue.queueName)
       val sender = qsession.createSender(q)
       val msg = qsession.createTextMessage("abcdef")
@@ -79,7 +79,7 @@ class JmsQueueSpec extends AnyWordSpec with Matchers {
       val connFactory = queue.createQueueConnectionFactory
       val conn = connFactory.createConnection()
       conn.getMetaData should not be (null)
-      val ackMode = javax.jms.Session.SESSION_TRANSACTED
+      val ackMode = jakarta.jms.Session.SESSION_TRANSACTED
       val session = conn.createSession(true, ackMode)
       session.getTransacted shouldBe (true)
       session.getAcknowledgeMode shouldBe (ackMode)

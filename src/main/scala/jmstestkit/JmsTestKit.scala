@@ -11,7 +11,7 @@ trait JmsTestKit {
     }
   }
 
-  def withConnectionFactory()(test: javax.jms.ConnectionFactory => Unit): Unit = {
+  def withConnectionFactory()(test: jakarta.jms.ConnectionFactory => Unit): Unit = {
     withBroker() { broker =>
       test(broker.createConnectionFactory)
     }
