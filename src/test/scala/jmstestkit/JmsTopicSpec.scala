@@ -5,7 +5,7 @@ import org.scalatest.concurrent.Eventually.eventually
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
-import javax.jms.JMSException
+import jakarta.jms.JMSException
 
 class JmsTopicSpec extends AnyWordSpec with Matchers {
 
@@ -44,7 +44,7 @@ class JmsTopicSpec extends AnyWordSpec with Matchers {
       val topic = JmsTopic()
       val connFactory = topic.createTopicConnectionFactory
       val conn = connFactory.createTopicConnection
-      val tsession = conn.createTopicSession(true, javax.jms.Session.AUTO_ACKNOWLEDGE)
+      val tsession = conn.createTopicSession(true, jakarta.jms.Session.AUTO_ACKNOWLEDGE)
       val t = tsession.createTopic(topic.topicName)
       val sender = tsession.createPublisher(t)
       val msg = tsession.createTextMessage("abcdef")
@@ -68,7 +68,7 @@ class JmsTopicSpec extends AnyWordSpec with Matchers {
       val connFactory = topic.createTopicConnectionFactory
       val conn = connFactory.createConnection()
       conn.getMetaData should not be (null)
-      val ackMode = javax.jms.Session.SESSION_TRANSACTED
+      val ackMode = jakarta.jms.Session.SESSION_TRANSACTED
       val session = conn.createSession(true, ackMode)
       session.getTransacted shouldBe (true)
       session.getAcknowledgeMode shouldBe (ackMode)

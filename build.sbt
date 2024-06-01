@@ -21,12 +21,14 @@ javacOptions ++= Seq("-source", "11", "-target", "11")
 
 parallelExecution := true
 
-val activeMqVersion = "5.16.7"
+val activeMqArtemisVersion = "2.33.0"
 
 libraryDependencies ++= Seq(
-  "org.apache.activemq" % "activemq-broker"   % activeMqVersion,
-  "org.apache.activemq" % "activemq-client"   % activeMqVersion,
-  "org.scalatest" %% "scalatest" % "3.2.19" % Test,
+  "org.apache.activemq" % "artemis-server"   % activeMqArtemisVersion,
+  "org.apache.activemq" % "artemis-jakarta-client"   % activeMqArtemisVersion,
+  "org.apache.activemq" % "artemis-jakarta-server"   % activeMqArtemisVersion,
+  "jakarta.jms" % "jakarta.jms-api" % "3.1.0",
+  "org.scalatest" %% "scalatest" % "3.2.18" % Test,
   "org.testng" % "testng" % "7.10.2" % Test,
   "com.google.guava" % "guava" % "33.2.1-jre" % Test,
   "ch.qos.logback" % "logback-classic" % "1.5.6" % Test,
