@@ -28,25 +28,24 @@ class JmsBroker(val server: ActiveMQServer) {
     }
   }
 
-  def clientConnectionCount: Int = server.getBroker.getClients.size
+  def clientConnectionCount: Int = server.getBrokerConnections.size()
 
   def createQueueConnectionFactory: jakarta.jms.QueueConnectionFactory = {
     checkState()
-    new ActiveMQConnectionFactory(server.getDefaultSocketURIString)
+    new ActiveMQConnectionFactory(/* fixme? */)
   }
 
   def createTopicConnectionFactory: jakarta.jms.TopicConnectionFactory = {
     checkState()
-    new ActiveMQConnectionFactory(server.getDefaultSocketURIString)
+    new ActiveMQConnectionFactory(/* fixme ? */)
   }
 
   def createConnectionFactory: jakarta.jms.ConnectionFactory = {
     checkState()
-    new ActiveMQConnectionFactory(service.getDefaultSocketURIString)
+    new ActiveMQConnectionFactory(/* fixme ? */)
   }
 
   def createJndiEnvironment: java.util.Hashtable[String, String] = {
-    import scala.collection.JavaConverters._
     val env = new java.util.Hashtable[String, String]()
     env.put(Context.PROVIDER_URL, brokerUri)
     env.put(Context.INITIAL_CONTEXT_FACTORY, classOf[ActiveMQInitialContextFactory].getName)
