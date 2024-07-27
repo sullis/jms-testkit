@@ -3,9 +3,9 @@ package jmstestkit
 import org.apache.activemq.artemis.core.config.Configuration
 import org.apache.activemq.artemis.core.config.impl.ConfigurationImpl
 import org.apache.activemq.artemis.core.server.{ActiveMQServer, ActiveMQServers}
-import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory
-import scala.jdk.CollectionConverters._
+import org.apache.activemq.artemis.jms.client.{ActiveMQConnectionFactory, ActiveMQQueueConnectionFactory, ActiveMQTopicConnectionFactory}
 
+import scala.jdk.CollectionConverters._
 import java.net.URI
 import java.util.UUID
 import javax.naming.Context
@@ -32,12 +32,12 @@ class JmsBroker(val server: ActiveMQServer) {
 
   def createQueueConnectionFactory: jakarta.jms.QueueConnectionFactory = {
     checkState()
-    new ActiveMQConnectionFactory(/* fixme? */)
+    new ActiveMQQueueConnectionFactory()
   }
 
   def createTopicConnectionFactory: jakarta.jms.TopicConnectionFactory = {
     checkState()
-    new ActiveMQConnectionFactory(/* fixme ? */)
+    new ActiveMQTopicConnectionFactory()
   }
 
   def createConnectionFactory: jakarta.jms.ConnectionFactory = {
