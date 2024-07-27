@@ -4,6 +4,7 @@ import org.apache.activemq.artemis.core.config.Configuration
 import org.apache.activemq.artemis.core.config.impl.ConfigurationImpl
 import org.apache.activemq.artemis.core.server.{ActiveMQServer, ActiveMQServers}
 import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory
+import scala.jdk.CollectionConverters._
 
 import java.net.URI
 import java.util.UUID
@@ -23,7 +24,7 @@ class JmsBroker(val server: ActiveMQServer) {
 
   def closeClientConnections(): Unit = {
     for (conn <- server.getBrokerConnections.asScala) {
-      Try { conn.() }
+      Try { conn.stop() }
     }
   }
 

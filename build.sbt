@@ -28,6 +28,7 @@ libraryDependencies ++= Seq(
   "org.apache.activemq" % "artemis-jakarta-client"   % activeMqArtemisVersion,
   "org.apache.activemq" % "artemis-jakarta-server"   % activeMqArtemisVersion,
   "jakarta.jms" % "jakarta.jms-api" % "3.1.0",
+  "org.scala-lang.modules" %% "scala-collection-compat" % "2.12.0",
   "org.scalatest" %% "scalatest" % "3.2.18" % Test,
   "org.testng" % "testng" % "7.10.2" % Test,
   "com.google.guava" % "guava" % "33.2.1-jre" % Test,
