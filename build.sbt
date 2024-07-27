@@ -21,7 +21,7 @@ javacOptions ++= Seq("-source", "11", "-target", "11")
 
 parallelExecution := true
 
-val activeMqArtemisVersion = "2.33.0"
+val activeMqArtemisVersion = "2.35.0"
 
 libraryDependencies ++= Seq(
   "org.apache.activemq" % "artemis-server"   % activeMqArtemisVersion,
