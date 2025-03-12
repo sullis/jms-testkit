@@ -6,7 +6,7 @@ organization := "io.github.sullis"
 
 scalaVersion := "2.12.20"
 
-crossScalaVersions := Seq(scalaVersion.value, "2.11.12", "2.13.16", "3.6.3")
+crossScalaVersions := Seq(scalaVersion.value, "2.11.12", "2.13.16", "3.6.4")
 
 scalacOptions ++= {
       CrossVersion.partialVersion(scalaVersion.value) match {
