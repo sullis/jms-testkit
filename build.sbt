@@ -21,7 +21,7 @@ javacOptions ++= Seq("-source", "11", "-target", "11")
 
 parallelExecution := true
 
-val activeMqVersion = "5.18.6"
+val activeMqVersion = "5.18.7"
 
 libraryDependencies ++= Seq(
   "org.apache.activemq" % "activemq-broker"   % activeMqVersion,
