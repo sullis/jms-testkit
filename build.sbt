@@ -1,4 +1,3 @@
-enablePlugins(Sonatype)
 
 name := "jms-testkit"
 
