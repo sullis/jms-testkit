@@ -17,7 +17,7 @@ jobs:
         java: [ '11', '17', '21', '22' ]
         scala: [ '2.13.16', '2.12.20', '2.11.12', '3.7.0' ]
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Set up JDK
       uses: actions/setup-java@v4
       with:
@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: git fetch --unshallow
         run:  git fetch --unshallow
       - name: Set up JDK
