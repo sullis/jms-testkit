@@ -67,6 +67,11 @@ QueueConnectionFactory connFactory = queue.createQueueConnectionFactory();
 - [fs2-jms](https://github.com/kiambogo/fs2-jms)
 - [Alpakka](https://github.com/akka/alpakka/tree/master/jms/src)
 
+# ActiveMQ Artemis
+
+- [Embedding Apache ActiveMQ Artemis](https://activemq.apache.org/components/artemis/documentation/2.0.0/embedding-activemq.html)
+
+
 # Related resources
 
 - [http://activemq.apache.org/how-to-unit-test-jms-code.html]
