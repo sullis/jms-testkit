@@ -34,17 +34,17 @@ class JmsBroker(val service: ActiveMQServer) {
 
   def clientConnectionCount: Int = service.getConnectionCount
 
-  def createQueueConnectionFactory: javax.jms.QueueConnectionFactory = {
+  def createQueueConnectionFactory: jakarta.jms.QueueConnectionFactory = {
     checkState()
     new ActiveMQQueueConnectionFactory(brokerUri)
   }
 
-  def createTopicConnectionFactory: javax.jms.TopicConnectionFactory = {
+  def createTopicConnectionFactory: jakarta.jms.TopicConnectionFactory = {
     checkState()
     new ActiveMQTopicConnectionFactory(brokerUri)
   }
 
-  def createConnectionFactory: javax.jms.ConnectionFactory = {
+  def createConnectionFactory: jakarta.jms.ConnectionFactory = {
     checkState()
     new ActiveMQConnectionFactory(brokerUri)
   }

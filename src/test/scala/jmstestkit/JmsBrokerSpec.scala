@@ -104,7 +104,7 @@ class JmsBrokerSpec extends AnyWordSpec with Matchers {
       queue.publishMessage("Hello world!")
       val ctx = broker.createJndiContext
 
-      val jndiQueue = ctx.lookup(queue.queueName).asInstanceOf[javax.jms.Queue]
+      val jndiQueue = ctx.lookup(queue.queueName).asInstanceOf[jakarta.jms.Queue]
       jndiQueue.getQueueName shouldBe queue.queueName
 
       intercept[javax.naming.NameNotFoundException] { ctx.lookup("bogusThing") }.getMessage shouldBe ("bogusThing")

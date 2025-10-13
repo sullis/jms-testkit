@@ -1,7 +1,7 @@
 package jmstestkit
 
 import java.util.UUID
-import javax.jms.{ConnectionFactory, Message, MessageListener, TextMessage, TopicConnectionFactory}
+import jakarta.jms.{ConnectionFactory, Message, MessageListener, TextMessage, TopicConnectionFactory}
 import scala.util.Try
 import scala.collection.mutable.ListBuffer
 import scala.collection.JavaConverters._
@@ -16,7 +16,7 @@ class JmsTopic(val broker: JmsBroker) {
   private def registerMessageListener(): Unit = {
     val conn = this.createTopicConnectionFactory.createTopicConnection()
     conn.start()
-    val session = conn.createTopicSession(true, javax.jms.Session.AUTO_ACKNOWLEDGE)
+    val session = conn.createTopicSession(true, jakarta.jms.Session.AUTO_ACKNOWLEDGE)
     val topic = session.createTopic(topicName)
     session.createSubscriber(topic).setMessageListener(new MessageListener() {
       override def onMessage(message: Message): Unit = {
@@ -31,7 +31,7 @@ class JmsTopic(val broker: JmsBroker) {
 
   def publishMessage(msg: String): Unit = {
     val conn = createTopicConnectionFactory.createTopicConnection()
-    val session = conn.createTopicSession(false, javax.jms.Session.AUTO_ACKNOWLEDGE)
+    val session = conn.createTopicSession(false, jakarta.jms.Session.AUTO_ACKNOWLEDGE)
     val topic = session.createTopic(topicName)
     val publisher = session.createPublisher(topic)
     publisher.send(session.createTextMessage(msg))
