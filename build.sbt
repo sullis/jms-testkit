@@ -23,9 +23,9 @@ parallelExecution := true
 val artemisVersion = "2.42.0"
 
 libraryDependencies ++= Seq(
-  "jakarta.jms" % "jakarta.jms-api" % "3.1.0",
-  "org.apache.activemq" % "artemis-jms-client"   % artemisVersion,
-  "org.apache.activemq" % "artemis-jms-server"   % artemisVersion,
+  // "jakarta.jms" % "jakarta.jms-api" % "3.1.0",
+  "org.apache.activemq" % "artemis-jakarta-client"   % artemisVersion,
+  "org.apache.activemq" % "artemis-jakarta-server"   % artemisVersion,
   "org.apache.activemq" % "artemis-server"       % artemisVersion,
   "org.scalatest" %% "scalatest" % "3.2.19" % Test,
   "org.testng" % "testng" % "7.11.0" % Test,
