@@ -1,18 +1,22 @@
 package jmstestkit
 
-import javax.naming.Context
-import org.apache.activemq.broker.BrokerStoppedException
-import org.apache.activemq.jndi.ActiveMQInitialContextFactory
+import org.apache.activemq.artemis.jndi.ActiveMQInitialContextFactory
 
 import scala.util.Try
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
+
+import javax.naming.Context
 
 class JmsBrokerSpec extends AnyWordSpec with Matchers {
   "construction" should {
     "unique broker uri's" in {
       val broker1 = JmsBroker()
       val broker2 = JmsBroker()
+
+      broker1.start()
+      broker2.start()
+
       broker1.brokerUri shouldNot equal (broker2.brokerUri)
     }
     "unique toString" in {
@@ -77,7 +81,7 @@ class JmsBrokerSpec extends AnyWordSpec with Matchers {
       conn2.close()
       broker.clientConnectionCount shouldBe 0
       broker.stop()
-      val ex = intercept[BrokerStoppedException] { broker.clientConnectionCount }
+      val ex = intercept[Exception] { broker.clientConnectionCount }
       ex.getCause.getMessage shouldBe ("Stop invoked")
     }
 

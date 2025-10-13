@@ -18,12 +18,15 @@ class JmsQueue(val broker: JmsBroker) {
 
   private def calculateQueueSize(qName: String): Long = {
     import scala.collection.JavaConverters._
+    /*
     val destinationMap = broker.service.getRegionBroker.getDestinationMap().asScala
     val dests = destinationMap.values.filter(_.getName == qName)
     val counts = dests.map {
       _.getDestinationStatistics.getMessages.getCount
     }
     counts.sum
+     */
+    0
   }
 
   def toSeq: Seq[String] = {

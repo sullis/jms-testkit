@@ -1,44 +1,52 @@
 package jmstestkit
 
-import java.net.URI
 import java.util.UUID
-
 import javax.naming.Context
-import org.apache.activemq.ActiveMQConnectionFactory
-import org.apache.activemq.broker.{BrokerFactory, BrokerService}
-import org.apache.activemq.jndi.ActiveMQInitialContextFactory
+import org.apache.activemq.artemis.jms.client.{ActiveMQConnectionFactory, ActiveMQQueueConnectionFactory, ActiveMQTopicConnectionFactory}
+import org.apache.activemq.artemis.jndi.ActiveMQInitialContextFactory
+import org.apache.activemq.artemis.core.server.ActiveMQServer
+import org.apache.activemq.artemis.core.server.ActiveMQServers
+import org.apache.activemq.artemis.core.config.impl.ConfigurationImpl
 
+import java.util.concurrent.TimeUnit
 import scala.util.Try
 
-class JmsBroker(val service: BrokerService) {
+class JmsBroker(val service: ActiveMQServer) {
   checkState()
 
   def isStarted: Boolean = service.isStarted
-  def isStopped: Boolean = service.isStopped
+  def isStopped: Boolean = !isStarted
 
-  def brokerUri: String = service.getDefaultSocketURIString
+  def brokerUri: String = {
+    val connMap = service.getConnectorsService.getConnectors
+    val keys = connMap.keySet()
+    keys.iterator().next()
+
+  }
 
   def closeClientConnections(): Unit = {
+    /*
     for (clientConn <- service.getBroker.getClients) {
       Try { clientConn.stop() }
     }
+     */
   }
 
-  def clientConnectionCount: Int = service.getBroker.getClients.size
+  def clientConnectionCount: Int = service.getConnectionCount
 
   def createQueueConnectionFactory: javax.jms.QueueConnectionFactory = {
     checkState()
-    new ActiveMQConnectionFactory(service.getDefaultSocketURIString)
+    new ActiveMQQueueConnectionFactory(brokerUri)
   }
 
   def createTopicConnectionFactory: javax.jms.TopicConnectionFactory = {
     checkState()
-    new ActiveMQConnectionFactory(service.getDefaultSocketURIString)
+    new ActiveMQTopicConnectionFactory(brokerUri)
   }
 
   def createConnectionFactory: javax.jms.ConnectionFactory = {
     checkState()
-    new ActiveMQConnectionFactory(service.getDefaultSocketURIString)
+    new ActiveMQConnectionFactory(brokerUri)
   }
 
   def createJndiEnvironment: java.util.Hashtable[String, String] = {
@@ -46,6 +54,7 @@ class JmsBroker(val service: BrokerService) {
     val env = new java.util.Hashtable[String, String]()
     env.put(Context.PROVIDER_URL, brokerUri)
     env.put(Context.INITIAL_CONTEXT_FACTORY, classOf[ActiveMQInitialContextFactory].getName)
+    /*
     val destinations = service.getBroker.getDurableDestinations.asScala
     for (dest <- destinations) {
       val name = dest.getPhysicalName
@@ -56,6 +65,7 @@ class JmsBroker(val service: BrokerService) {
         env.put("topic." + name, name)
       }
     }
+     */
     env
   }
 
@@ -64,7 +74,10 @@ class JmsBroker(val service: BrokerService) {
     factory.getInitialContext(createJndiEnvironment)
   }
 
-  def start(force: Boolean = true): Unit = service.start(force)
+  def start(force: Boolean = true): Unit = {
+    service.start()
+    service.waitForActivation(3, TimeUnit.SECONDS)
+  }
 
   def restart(): Unit = {
     stop()
@@ -78,10 +91,8 @@ class JmsBroker(val service: BrokerService) {
   }
 
   private def checkState(): Unit = {
-    if (service.isStopped) {
+    if (!service.isStarted) {
       throw new IllegalStateException("Broker is stopped")
-    } else if (service.isStopping) {
-      throw new IllegalStateException("Broker is stopping")
     }
   }
 }
@@ -89,15 +100,21 @@ class JmsBroker(val service: BrokerService) {
 object JmsBroker {
   def apply(): JmsBroker = {
     val inMemoryBrokerName = "brokerName-" + UUID.randomUUID.toString
-    val transportUri = s"vm://${inMemoryBrokerName}?create=false"
-    val brokerConfigUri = new URI(s"broker:(${transportUri})/${inMemoryBrokerName}?persistent=false&useJmx=false")
 
-    val brokerService = BrokerFactory.createBroker(brokerConfigUri)
-    brokerService.setPersistent(false)
-    brokerService.setUseJmx(false)
-    brokerService.setStartAsync(false)
-    brokerService.start()
-    brokerService.waitUntilStarted()
-    new JmsBroker(brokerService)
+    val config = new ConfigurationImpl()
+      .setName(inMemoryBrokerName)
+      .setJMXManagementEnabled(false)
+      .setPersistenceEnabled(false)
+      .setSecurityEnabled(false)
+      .addAcceptorConfiguration("invm", "vm://0")
+
+    val server = ActiveMQServers.newActiveMQServer(config)
+    server.start()
+    server.waitForActivation(5, TimeUnit.SECONDS)
+
+    val connectors = server.getConnectorsService.getConnectors
+    System.out.println("connectors: " + connectors)
+
+    new JmsBroker(server)
   }
 }
